@@ -18,7 +18,7 @@ class EventAccumulator:
         events = Events(
                 np.asarray(self.x, dtype='uint16'),
                 np.asarray(self.y, dtype='uint16'),
-                np.asarray(self.p, dtype='uint8'),
+                np.asarray(self.p, dtype='int16'),
                 np.asarray(self.t, dtype='int64'))
         return events
 

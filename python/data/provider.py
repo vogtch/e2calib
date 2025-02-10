@@ -53,9 +53,10 @@ class SharedEventBuffer:
 class SharedBufferProducer:
     def __init__(self, h5file: Path, shared_ev_buffer: SharedEventBuffer):
         assert h5file.is_file()
-        assert h5file.name.endswith('.h5')
-        self.h5f = h5py.File(str(h5file), 'r')
-        self._finalizer = weakref.finalize(self, self.close_callback, self.h5f)
+        assert h5file.name.endswith('.hdf5')
+        self.h5f_file = h5py.File(str(h5file), 'r')
+        self.h5f = self.h5f_file['CD']['events']
+        self._finalizer = weakref.finalize(self, self.close_callback, self.h5f_file)
 
         # Shared buffer (akin to producer-consumer pattern)
         self.shared_ev_buffer = shared_ev_buffer
@@ -136,7 +137,7 @@ class SharedBufferConsumer:
                 retrieved_events = Events(
                         np.array([], dtype=np.uint16),
                         np.array([], dtype=np.uint16),
-                        np.array([], dtype=np.uint8),
+                        np.array([], dtype=np.int16),
                         np.array([], dtype=np.int64))
             else:
                 retrieved_events = Events(

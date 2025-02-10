@@ -69,13 +69,13 @@ class VoxelGrid:
 
         event_array[:, 0] = (self.num_bins - 1) * (event_array[:, 0] - first_stamp) / deltaT
         ts = event_array[:, 0]
-        xs = event_array[:, 1].astype(np.int)
-        ys = event_array[:, 2].astype(np.int)
+        xs = event_array[:, 1].astype(int)
+        ys = event_array[:, 2].astype(int)
         pols = event_array[:, 3]
         pols[pols == 0] = -1  # polarity should be +1 / -1
         
 
-        tis = ts.astype(np.int)
+        tis = ts.astype(int)
         dts = ts - tis
         vals_left = pols * (1.0 - dts)
         vals_right = pols * dts
@@ -106,7 +106,7 @@ if __name__ == '__main__':
     events = Events(
             x=np.array([0, 1, 5, 3, 4 ,7], dtype='uint16'),
             y=np.array([1, 2, 4, 3, 4, 1], dtype='uint16'),
-            p=np.array([0, 0, 1, 1, 0, 1], dtype='uint8'),
+            p=np.array([0, 0, 1, 1, 0, 1], dtype='int16'),
             t=np.array([5, 9, 11, 17, 27, 30], dtype='int64'),
             width=8,
             height=5,
